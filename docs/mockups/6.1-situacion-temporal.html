@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>SGE-TRASU · Situación temporal</title>
+<link rel="stylesheet" href="estilos.css">
+<style>
+  .fila { display: grid; gap: 20px; margin-bottom: 20px; }
+  .fila.a { grid-template-columns: 1.15fr 1fr; }
+  .fila.b { grid-template-columns: 1fr 1.05fr; }
+
+  /* Resultado */
+  .resultado { display: flex; flex-direction: column; gap: 14px; }
+  .cifras { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 12px; }
+  .cifra { background: var(--gris-100); border-radius: 6px; padding: 12px 14px; }
+  .cifra .et { font-size: 11.5px; color: var(--gris-700); text-transform: uppercase; letter-spacing: .5px; }
+  .cifra .v { font-size: 26px; font-weight: 700; color: var(--azul-900); font-variant-numeric: tabular-nums; }
+  .cifra .v small { font-size: 13px; font-weight: 600; color: var(--gris-700); }
+  .barra-avance { height: 10px; background: var(--gris-100); border-radius: 5px; overflow: hidden; border: 1px solid var(--gris-300); }
+  .barra-avance div { height: 100%; background: var(--ambar); }
+  .linea-estado { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; color: var(--gris-700); }
+  .registro { font-size: 12px; color: var(--gris-700); border-top: 1px dashed var(--gris-300); padding-top: 10px; }
+
+  /* Calendario */
+  .meses { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .mes h3 { font-size: 12.5px; color: var(--gris-700); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px; }
+  .grilla { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .grilla .dsem { font-size: 10.5px; color: var(--gris-500); text-align: center; padding-bottom: 2px; }
+  .dia { position: relative; height: 40px; border-radius: 4px; font-size: 12px; display: flex; align-items: flex-start; justify-content: flex-start; padding: 3px 0 0 5px; background: var(--blanco); border: 1px solid var(--gris-100); color: var(--gris-500); }
+  .dia .n { position: absolute; bottom: 2px; right: 4px; font-size: 10px; font-weight: 700; color: var(--azul-700); }
+  .dia.limite .n { color: var(--blanco); }
+  .dia.contado { background: var(--azul-100); color: var(--azul-900); border-color: #c6d8ec; }
+  .dia.recepcion { background: var(--azul-900); color: var(--blanco); }
+  .dia.suspendido { background: repeating-linear-gradient(45deg, var(--violeta-bg), var(--violeta-bg) 4px, #e2d4f3 4px, #e2d4f3 8px); color: var(--violeta); border-color: #d7c4ee; }
+  .dia.feriado { background: var(--rojo-bg); color: var(--rojo); }
+  .dia.finde { background: var(--gris-100); }
+  .dia.hoy { outline: 2px solid var(--ambar); outline-offset: -2px; font-weight: 700; }
+  .dia.limite { background: var(--ambar); color: var(--blanco); font-weight: 700; }
+  .dia.vacio { background: transparent; border: none; }
+  .ley-cal { display: flex; flex-wrap: wrap; gap: 12px; font-size: 11.5px; color: var(--gris-700); margin-top: 10px; }
+  .ley-cal i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 4px; border: 1px solid var(--gris-300); }
+
+  .ref { font-size: 11px; color: var(--gris-500); white-space: nowrap; }
+  .campo.falta .valor { border-color: var(--rojo); background: var(--rojo-bg); color: var(--rojo); font-weight: 600; }
+  .oculto { display: none !important; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="barra">
+    <div class="marca">SGE-TRASU <span>Gestión del flujo interno de expedientes</span></div>
+    <div class="sesion">
+      <span class="modo">Operación normal</span>
+      <span>M. Quispe · Analista legal</span>
+      <div class="avatar">MQ</div>
+    </div>
+  </header>
+
+  <nav class="menu">
+    <div class="grupo">Trabajo</div>
+    <a class="activo" href="#">Bandeja de pendientes</a>
+    <a href="#">Expedientes</a>
+    <a href="#">Versiones y revisión</a>
+    <div class="grupo">Frontera</div>
+    <a href="#">Salidas e intercambios</a>
+    <a href="#">Derivaciones especiales</a>
+    <div class="grupo">Control</div>
+    <a href="#">Trazabilidad</a>
+  </nav>
+
+  <main class="contenido">
+    <div class="migas">Bandeja de pendientes › EXP-2026-004518 › Situación temporal</div>
+    <div class="titulo">
+      <h1>Situación temporal del expediente</h1>
+      <div class="sub">CU-08 · RF-015A · RF-027</div>
+    </div>
+
+    <div class="fila a">
+      <!-- 1. Datos del cómputo -->
+      <section class="tarjeta">
+        <h2><span class="num">1</span> Datos del cómputo</h2>
+        <div class="campos">
+          <div class="campo usuario">
+            <label>Expediente <span class="origen u">Usuario</span></label>
+            <div class="valor"><b>EXP-2026-004518</b> (seleccionado en la bandeja)</div>
+          </div>
+          <div class="campo">
+            <label>Tipo de procedimiento <span class="origen a">Automático</span></label>
+            <div class="valor">Recurso de apelación</div>
+          </div>
+          <div class="campo" id="c-materia">
+            <label>Materia <span class="origen a">Automático</span></label>
+            <div class="valor" id="v-materia"></div>
+          </div>
+          <div class="campo" id="c-regimen">
+            <label>Régimen aplicable <span class="origen a">Automático</span></label>
+            <div class="valor" id="v-regimen"></div>
+          </div>
+          <div class="campo">
+            <label>Recepción por el TRASU <span class="origen a">Automático</span></label>
+            <div class="valor">01/10/2026</div>
+          </div>
+          <div class="campo">
+            <label>Ampliación de plazo <span class="origen a">Automático</span></label>
+            <div class="valor">No registrada</div>
+          </div>
+          <div class="campo ancho">
+            <label>Suspensiones registradas <span class="origen a">Automático</span></label>
+            <div class="valor">Inadmisibilidad notificada el 06/10/2026 · subsanada el 09/10/2026</div>
+          </div>
+          <div class="campo">
+            <label>Calendario de días inhábiles <span class="origen a">Automático</span></label>
+            <div class="valor">Calendario 2026 · v1</div>
+          </div>
+          <div class="campo">
+            <label>Fecha de consulta <span class="origen a">Automático</span></label>
+            <div class="valor">05/11/2026 · 09:42</div>
+          </div>
+        </div>
+        <div class="leyenda">
+          <span><span class="origen u">Usuario</span> dato que indica el usuario</span>
+          <span><span class="origen a">Automático</span> dato traído de registros del expediente y catálogos</span>
+        </div>
+      </section>
+
+      <!-- 3. Resultado -->
+      <section class="tarjeta resultado">
+        <h2><span class="num">3</span> Resultado</h2>
+
+        <div id="r-validado">
+          <div class="cifras">
+            <div class="cifra"><div class="et">Fecha límite</div><div class="v" id="v-limite"></div></div>
+            <div class="cifra"><div class="et">Restan</div><div class="v"><span id="v-restan"></span> <small>días háb.</small></div></div>
+            <div class="cifra"><div class="et">Transcurridos</div><div class="v"><span id="v-trans"></span> <small id="v-den"></small></div></div>
+          </div>
+          <div style="margin-top:14px" class="barra-avance"><div id="v-barra"></div></div>
+          <div style="margin-top:12px" class="linea-estado">
+            <span>Semáforo: <span class="estado ambar" id="v-semaforo">ALERTA PREVENTIVA</span></span>
+            <span>Cómputo: <span class="estado verde">VALIDADO</span></span>
+          </div>
+          <div style="margin-top:12px" class="aviso alerta">
+            Quedan <b id="v-restan2"></b> días hábiles. Se muestra alerta preventiva porque el saldo es
+            menor o igual al umbral configurado (<b>5 días hábiles</b>).
+          </div>
+        </div>
+
+        <div id="r-novalidado" class="oculto">
+          <div class="cifras">
+            <div class="cifra"><div class="et">Fecha límite</div><div class="v">—</div></div>
+            <div class="cifra"><div class="et">Restan</div><div class="v">—</div></div>
+            <div class="cifra"><div class="et">Transcurridos</div><div class="v">—</div></div>
+          </div>
+          <div style="margin-top:12px" class="linea-estado">
+            <span>Semáforo: <span class="estado gris">SIN ALERTA</span></span>
+            <span>Cómputo: <span class="estado gris">NO VALIDADO</span></span>
+          </div>
+          <div style="margin-top:12px" class="aviso alerta">
+            <b>Falta la materia del recurso.</b> Sin ella no puede determinarse si corresponde el plazo de
+            15 días hábiles (art. 70.1) o el de 25 días hábiles. El sistema no infiere un vencimiento ni emite
+            alerta hasta que el dato sea registrado por un actor competente.
+          </div>
+        </div>
+
+        <div class="registro" id="v-registro"></div>
+        <div class="aviso frontera">
+          El cómputo apoya la gestión interna. No declara vencimientos con efecto jurídico ni aplica silencio
+          administrativo: esa determinación corresponde al funcionario competente (RN-P-006, RN-P-008).
+        </div>
+        <div class="acciones" style="margin-top:auto">
+          <button class="btn">Volver</button>
+          <button class="btn">Historial de cómputos</button>
+          <button class="btn primario">Imprimir desglose</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- 2. Cómo se calculó -->
+    <div class="fila b">
+      <section class="tarjeta">
+        <h2><span class="num">2</span> Cómo se calculó</h2>
+        <table>
+          <thead><tr><th>Paso</th><th>Detalle</th><th class="num">Valor</th><th>Regla</th></tr></thead>
+          <tbody id="t-desglose"></tbody>
+        </table>
+      </section>
+
+      <section class="tarjeta">
+        <h2>Calendario del cómputo</h2>
+        <div class="meses" id="calendario"></div>
+        <div class="ley-cal">
+          <span><i style="background:var(--azul-900)"></i>Recepción</span>
+          <span><i style="background:var(--azul-100)"></i>Día hábil contado (n.º)</span>
+          <span><i style="background:var(--violeta-bg)"></i>Suspendido</span>
+          <span><i style="background:var(--rojo-bg)"></i>Feriado</span>
+          <span><i style="background:var(--gris-100)"></i>Fin de semana</span>
+          <span><i style="background:var(--blanco);outline:2px solid var(--ambar)"></i>Hoy</span>
+          <span><i style="background:var(--ambar)"></i>Fecha límite</span>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+// ---------- Datos del expediente (en el sistema real vienen del backend) ----------
+const sinMateria = location.hash === "#no-validado";
+const expediente = {
+  tipo: "APELACION",
+  materia: sinMateria ? null : { nombre: "Facturación (no comprendida en art. 70.1)", art70_1: false },
+  recepcion: "2026-10-01",
+  ampliacion: 0,
+  suspensiones: [{ motivo: "Inadmisibilidad", desde: "2026-10-06", hasta: "2026-10-09" }],
+  feriados: ["2026-10-08", "2026-11-01"],
+  consulta: "2026-11-05",
+  umbralAlerta: 5
+};
+
+// ---------- Reglas de plazo (catálogo regla_plazo) ----------
+function determinarRegimen(exp) {
+  if (exp.tipo === "QUEJA") return { base: 13, regla: "RN-D-021", ampliacionMax: 10 };
+  if (!exp.materia) return null;                       // sin materia no hay régimen → RN-P-008
+  return exp.materia.art70_1
+    ? { base: 15, regla: "RN-D-017", ampliacionMax: 20 }
+    : { base: 25, regla: "RN-D-018", ampliacionMax: 20 };
+}
+
+// ---------- Cómputo de días hábiles con suspensiones ----------
+const iso = d => d.toISOString().slice(0, 10);
+const fmt = s => s.split("-").reverse().join("/");
+function esSuspendido(fecha, susp) { return susp.some(s => fecha >= s.desde && fecha <= s.hasta); }
+function esInhabil(d, feriados) { const w = d.getUTCDay(); return w === 0 || w === 6 || feriados.includes(iso(d)); }
+
+function calcularPlazo(exp) {
+  const reg = determinarRegimen(exp);
+  if (!reg) return { validado: false };
+  const N = reg.base + exp.ampliacion;
+  const d = new Date(exp.recepcion + "T00:00:00Z");
+  const contados = {};                                  // fecha → n.º de día hábil
+  let n = 0, transcurridos = 0, suspendidos = [];
+  while (n < N) {
+    d.setUTCDate(d.getUTCDate() + 1);                   // empieza el día siguiente a la recepción
+    const f = iso(d);
+    if (esInhabil(d, exp.feriados)) continue;
+    if (esSuspendido(f, exp.suspensiones)) { suspendidos.push(f); continue; }
+    contados[f] = ++n;
+    if (f <= exp.consulta) transcurridos = n;
+  }
+  const limite = iso(d), restan = N - transcurridos;
+  const semaforo = restan <= 0 ? "VENCIDO" : restan <= exp.umbralAlerta ? "ALERTA PREVENTIVA" : "EN PLAZO";
+  return { validado: true, reg, N, limite, transcurridos, restan, semaforo, contados, suspendidos };
+}
+
+// ---------- Presentación ----------
+const r = calcularPlazo(expediente);
+const $ = id => document.getElementById(id);
+
+$("v-materia").textContent = expediente.materia ? expediente.materia.nombre : "No identificada";
+if (!r.validado) {
+  $("c-materia").classList.add("falta");
+  $("c-regimen").classList.add("falta");
+  $("v-regimen").textContent = "No determinable";
+  $("r-validado").classList.add("oculto");
+  $("r-novalidado").classList.remove("oculto");
+} else {
+  $("v-regimen").textContent = `Apelación general · ${r.reg.base} días hábiles`;
+  $("v-limite").textContent = fmt(r.limite);
+  $("v-restan").textContent = $("v-restan2").textContent = r.restan;
+  $("v-trans").textContent = r.transcurridos;
+  $("v-den").textContent = `de ${r.N}`;
+  $("v-barra").style.width = (100 * r.transcurridos / r.N) + "%";
+  $("v-semaforo").textContent = r.semaforo;
+}
+$("v-registro").innerHTML = r.validado
+  ? "Cómputo guardado: <span class='mono'>CT-2026-011873</span> · 05/11/2026 09:42 · regla de plazo v1 · registrado en bitácora"
+  : "Cómputo guardado como <b>No validado</b>: <span class='mono'>CT-2026-011874</span> · 05/11/2026 09:42 · registrado en bitácora";
+
+const filas = r.validado ? [
+  ["1", "Plazo base: apelación no comprendida en el art. 70.1", r.reg.base, r.reg.regla],
+  ["2", "Ampliación otorgada (máx. 20, una sola vez)", expediente.ampliacion, "RN-D-019"],
+  ["3", "Plazo total N = base + ampliación", r.N, "—"],
+  ["4", "Inicio: día siguiente a la recepción (01/10/2026)", "02/10", r.reg.regla],
+  ["5", "Días hábiles suspendidos por inadmisibilidad: " + r.suspendidos.map(f => f.slice(8)).join(", ") + "/10", r.suspendidos.length, "RN-D-014"],
+  ["6", "Feriados excluidos: 08/10 (no se cuentan sábados ni domingos)", 1, "Calendario"],
+  ["7", "Días hábiles transcurridos al 05/11/2026", r.transcurridos, "—"],
+  ["8", "Días hábiles restantes = N − transcurridos", r.restan, "—"],
+] : [
+  ["1", "Plazo base: no determinable sin la materia del recurso", "—", "RN-P-008"],
+  ["2", "Ampliación otorgada", expediente.ampliacion, "RN-D-019"],
+  ["3", "Suspensiones registradas", "1", "RN-D-014"],
+  ["4", "Fecha límite: no se infiere", "—", "RF-015A"],
+];
+$("t-desglose").innerHTML = filas.map(f =>
+  `<tr><td>${f[0]}</td><td>${f[1]}</td><td class="num">${f[2]}</td><td class="ref">${f[3]}</td></tr>`).join("") +
+  (r.validado ? `<tr class="total"><td></td><td>Fecha límite (día hábil n.º ${r.N})</td><td class="num">${fmt(r.limite)}</td><td></td></tr>` : "");
+
+// Calendario de octubre y noviembre 2026
+function mes(anio, m, nombre) {
+  const primero = new Date(Date.UTC(anio, m, 1));
+  const dias = new Date(Date.UTC(anio, m + 1, 0)).getUTCDate();
+  const offset = (primero.getUTCDay() + 6) % 7;         // semana empieza en lunes
+  let h = `<div class="mes"><h3>${nombre} 2026</h3><div class="grilla">` +
+    ["L","M","M","J","V","S","D"].map(x => `<div class="dsem">${x}</div>`).join("") +
+    `<div class="dia vacio"></div>`.repeat(offset);
+  for (let i = 1; i <= dias; i++) {
+    const d = new Date(Date.UTC(anio, m, i)), f = iso(d), c = ["dia"];
+    let extra = "";
+    if (f === expediente.recepcion) c.push("recepcion");
+    else if (expediente.feriados.includes(f)) c.push("feriado");
+    else if (d.getUTCDay() % 6 === 0) c.push("finde");
+    else if (esSuspendido(f, expediente.suspensiones)) c.push("suspendido");
+    else if (r.validado && r.contados[f]) { c.push(f === r.limite ? "limite" : "contado"); extra = `<span class="n">${r.contados[f]}</span>`; }
+    if (f === expediente.consulta) c.push("hoy");
+    h += `<div class="${c.join(" ")}">${i}${extra}</div>`;
+  }
+  return h + "</div></div>";
+}
+$("calendario").innerHTML = mes(2026, 9, "Octubre") + mes(2026, 10, "Noviembre");
+</script>
+</body>
+</html>

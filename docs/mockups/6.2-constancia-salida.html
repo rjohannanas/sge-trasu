@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>SGE-TRASU · Constancia de salida</title>
+<link rel="stylesheet" href="estilos.css">
+<style>
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  .pila { display: flex; flex-direction: column; gap: 20px; }
+
+  .toast { display: flex; align-items: center; gap: 12px; background: var(--verde-bg); border: 1px solid #b7e0c8; color: var(--verde); border-radius: var(--radio); padding: 10px 16px; margin-bottom: 18px; font-size: 13px; }
+  .toast b { color: #145a39; }
+  .toast .ic { width: 22px; height: 22px; border-radius: 50%; background: var(--verde); color: var(--blanco); display: grid; place-items: center; font-weight: 700; }
+
+  .bloqueado { opacity: .55; }
+  .estados { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+  .estados div { font-size: 12px; color: var(--gris-700); }
+  .estados .estado { margin-bottom: 4px; }
+
+  /* Constancia con aspecto de documento */
+  .constancia { background: var(--blanco); border: 1px solid var(--gris-300); border-radius: var(--radio); box-shadow: 0 2px 10px rgba(18,38,63,.08); }
+  .constancia .cab { border-bottom: 3px solid var(--azul-900); padding: 20px 26px 14px; display: flex; justify-content: space-between; align-items: flex-start; }
+  .constancia .cab h2 { font-size: 16px; letter-spacing: 1px; color: var(--azul-900); }
+  .constancia .cab .sis { font-size: 12px; color: var(--gris-700); margin-top: 2px; }
+  .constancia .cuerpo { padding: 18px 26px; }
+  .constancia dl { display: grid; grid-template-columns: 190px 1fr; gap: 9px 14px; font-size: 13px; }
+  .constancia dt { color: var(--gris-700); }
+  .constancia dd { font-weight: 600; word-break: break-all; }
+  .constancia .sello { margin: 18px 0 4px; display: flex; align-items: center; justify-content: space-between; border: 1px dashed var(--verde); background: var(--verde-bg); border-radius: 6px; padding: 12px 16px; }
+  .constancia .sello .estado { font-size: 15px; padding: 6px 16px; background: var(--blanco); }
+  .constancia .sello small { color: #145a39; font-size: 12px; }
+  .constancia .pie { padding: 0 26px 20px; }
+  .constancia .verif { font-size: 11.5px; color: var(--gris-500); margin-top: 12px; }
+  .sep { border: none; border-top: 1px solid var(--gris-300); margin: 14px 0; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="barra">
+    <div class="marca">SGE-TRASU <span>Gestión del flujo interno de expedientes</span></div>
+    <div class="sesion">
+      <span class="modo">Operación normal</span>
+      <span>L. Torres · Personal administrativo</span>
+      <div class="avatar">LT</div>
+    </div>
+  </header>
+
+  <nav class="menu">
+    <div class="grupo">Trabajo</div>
+    <a href="#">Bandeja de pendientes</a>
+    <a href="#">Expedientes</a>
+    <a href="#">Versiones y revisión</a>
+    <div class="grupo">Frontera</div>
+    <a class="activo" href="#">Salidas e intercambios</a>
+    <a href="#">Derivaciones especiales</a>
+    <div class="grupo">Control</div>
+    <a href="#">Trazabilidad</a>
+  </nav>
+
+  <main class="contenido">
+    <div class="migas">Salidas e intercambios › EXP-2026-004518 › Constancia</div>
+    <div class="titulo">
+      <h1>Registrar salida e intercambio externo</h1>
+      <div class="sub">CU-09 · CU-10 · RF-016 · RF-017 · RF-018</div>
+    </div>
+
+    <div class="toast">
+      <span class="ic">✓</span>
+      <span><b>Salida registrada.</b> El sistema destino confirmó la recepción en el intento 2. La constancia se generó
+      y quedó guardada en la bitácora (evento <span class="mono">BA-2026-1842207</span>).</span>
+    </div>
+
+    <div class="cols">
+      <div class="pila">
+        <!-- 1. Datos de la salida -->
+        <section class="tarjeta">
+          <h2><span class="num">1</span> Datos de la salida</h2>
+          <div class="campos">
+            <div class="campo usuario">
+              <label>Expediente <span class="origen u">Usuario</span></label>
+              <div class="valor"><b>EXP-2026-004518</b></div>
+            </div>
+            <div class="campo usuario">
+              <label>Destino <span class="origen u">Usuario</span></label>
+              <div class="valor">SGD · Gestión Documental ▾</div>
+            </div>
+            <div class="campo">
+              <label>Actuación a remitir <span class="origen a">Automático</span></label>
+              <div class="valor">Proyecto de resolución · versión v3</div>
+            </div>
+            <div class="campo">
+              <label>Conformidad interna <span class="origen a">Automático</span></label>
+              <div class="valor">Vocal R. Salazar · 03/11/2026 16:20</div>
+            </div>
+            <div class="campo ancho">
+              <label>Identificador de la versión <span class="origen a">Automático</span></label>
+              <div class="valor mono">3f8a2c71-0d94-4b6e-a1c5-9e72b4d06f18</div>
+            </div>
+            <div class="campo ancho">
+              <label>Huella SHA-256 del contenido <span class="origen a">Automático</span></label>
+              <div class="valor mono">9b2f4e1ac07d53e8f61a2b94c3d0e7f58a16c29d4b70e3f1a5c8d26e09b47f3a</div>
+            </div>
+            <div class="campo ancho usuario">
+              <label>Comentario de remisión (opcional) <span class="origen u">Usuario</span></label>
+              <div class="valor">Remisión para trámite de firma y notificación.</div>
+            </div>
+          </div>
+          <div class="leyenda">
+            <span><span class="origen u">Usuario</span> dato que indica el usuario</span>
+            <span><span class="origen a">Automático</span> dato traído de la versión conformada</span>
+          </div>
+          <div class="acciones bloqueado">
+            <button class="btn">Cancelar</button>
+            <button class="btn primario">Registrar salida</button>
+          </div>
+        </section>
+
+        <!-- 2. Intentos -->
+        <section class="tarjeta">
+          <h2><span class="num">2</span> Intentos de intercambio</h2>
+          <table>
+            <thead><tr><th>#</th><th>Fecha y hora</th><th>Respuesta del destino</th><th>Resultado</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td class="mono">05/11/2026 10:15:02</td>
+                <td>Sin respuesta en 5 000 ms (tiempo de espera agotado)</td>
+                <td><span class="estado rojo">FALLIDO</span></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td class="mono">05/11/2026 10:15:09</td>
+                <td>Reintento automático (espera 2 s) · acuse <span class="mono">SGD-2026-0098431</span></td>
+                <td><span class="estado verde">CONFIRMADO</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="aviso" style="margin-top:12px">
+            Los dos intentos usan la misma clave de idempotencia
+            <span class="mono">7c1e9a42-5b3d-4f08-9e6a-2d4c81f0b37e</span>, así el destino no registra la remisión dos veces.
+            El sistema hace hasta 3 reintentos con espera creciente; el intento fallido se conserva en el historial.
+          </div>
+          <div class="estados">
+            <div><span class="estado verde">CONFIRMADO</span><br>El destino devolvió un acuse de recepción.</div>
+            <div><span class="estado ambar">PENDIENTE</span><br>Respuesta ambigua o en espera de confirmación.</div>
+            <div><span class="estado rojo">FALLIDO</span><br>Sin acuse tras 3 reintentos; pasa a tratamiento (CU-10).</div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 3. Constancia -->
+      <section class="constancia">
+        <div class="cab">
+          <div>
+            <h2>CONSTANCIA DE INTERCAMBIO EXTERNO</h2>
+            <div class="sis">SGE-TRASU · Flujo interno de expedientes de segunda instancia</div>
+          </div>
+          <div style="text-align:right;font-size:12px;color:var(--gris-700)">Emitida el<br><b style="color:var(--gris-900)">05/11/2026 10:15:09</b></div>
+        </div>
+        <div class="cuerpo">
+          <dl>
+            <dt>N.º de transacción</dt><dd class="mono">7c1e9a42-5b3d-4f08-9e6a-2d4c81f0b37e</dd>
+            <dt>Expediente</dt><dd>EXP-2026-004518 · Recurso de apelación</dd>
+            <dt>Actuación remitida</dt><dd>Proyecto de resolución · versión v3</dd>
+            <dt>Versión</dt><dd class="mono">3f8a2c71-0d94-4b6e-a1c5-9e72b4d06f18</dd>
+            <dt>Huella SHA-256</dt><dd class="mono">9b2f4e1ac07d53e8…a5c8d26e09b47f3a</dd>
+            <dt>Conformidad interna</dt><dd>Vocal R. Salazar · 03/11/2026 16:20</dd>
+          </dl>
+          <hr class="sep">
+          <dl>
+            <dt>Destino</dt><dd>SGD · Sistema de Gestión Documental</dd>
+            <dt>Acuse del destino</dt><dd class="mono">SGD-2026-0098431</dd>
+            <dt>Intentos</dt><dd>2 (1 fallido · 1 confirmado)</dd>
+            <dt>Registrado por</dt><dd>L. Torres · Personal administrativo</dd>
+          </dl>
+          <div class="sello">
+            <span class="estado verde">CONFIRMADO</span>
+            <small>Recepción acreditada por el acuse del sistema destino</small>
+          </div>
+        </div>
+        <div class="pie">
+          <div class="aviso frontera">
+            Esta constancia acredita solo la remisión y el acuse de recepción del sistema destino.
+            <b>No equivale a firma, numeración, emisión, notificación, cierre ni archivo</b> del expediente
+            (RN-P-006, RN-P-007, RNF-008).
+          </div>
+          <div class="verif">Evento de bitácora <span class="mono">BA-2026-1842207</span> · la consulta e impresión de esta constancia también quedan registradas.</div>
+          <div class="acciones">
+            <button class="btn">Volver a salidas</button>
+            <button class="btn">Imprimir</button>
+            <button class="btn primario">Descargar PDF</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

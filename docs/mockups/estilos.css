@@ -1,0 +1,94 @@
+/* SGE-TRASU — estilos compartidos de los mockups (sección 6) */
+:root {
+  --azul-900: #12263f;
+  --azul-700: #1f4e79;
+  --azul-500: #2f6fad;
+  --azul-100: #e6eef7;
+  --gris-900: #1d232b;
+  --gris-700: #4a5562;
+  --gris-500: #7b8794;
+  --gris-300: #c9d1da;
+  --gris-100: #f2f4f7;
+  --blanco: #ffffff;
+  --verde: #1e7d4f;
+  --verde-bg: #e3f4ea;
+  --ambar: #a86400;
+  --ambar-bg: #fdf1dc;
+  --rojo: #b3261e;
+  --rojo-bg: #fbe4e2;
+  --violeta: #6a3fa0;
+  --violeta-bg: #efe7f8;
+  --radio: 8px;
+  font-family: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+  color: var(--gris-900);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--gris-100); font-size: 14px; line-height: 1.45; }
+
+/* ---------- Estructura general ---------- */
+.app { display: grid; grid-template-columns: 220px 1fr; grid-template-rows: 56px 1fr; min-height: 100vh; width: 1440px; }
+
+.barra {
+  grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between;
+  background: var(--azul-900); color: var(--blanco); padding: 0 24px;
+}
+.barra .marca { font-weight: 700; font-size: 17px; letter-spacing: .3px; }
+.barra .marca span { font-weight: 400; opacity: .7; margin-left: 8px; font-size: 13px; }
+.barra .sesion { display: flex; align-items: center; gap: 16px; font-size: 13px; }
+.barra .modo { background: var(--verde); padding: 3px 10px; border-radius: 12px; font-size: 12px; }
+.barra .avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--azul-500); display: grid; place-items: center; font-weight: 700; }
+
+.menu { background: var(--blanco); border-right: 1px solid var(--gris-300); padding: 16px 0; }
+.menu a { display: block; padding: 10px 24px; color: var(--gris-700); text-decoration: none; border-left: 3px solid transparent; }
+.menu a.activo { color: var(--azul-700); background: var(--azul-100); border-left-color: var(--azul-700); font-weight: 600; }
+.menu .grupo { padding: 16px 24px 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: var(--gris-500); }
+
+.contenido { padding: 24px 32px 32px; }
+.migas { font-size: 12px; color: var(--gris-500); margin-bottom: 6px; }
+.titulo { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
+.titulo h1 { font-size: 22px; color: var(--azul-900); }
+.titulo .sub { color: var(--gris-700); font-size: 13px; }
+
+/* ---------- Tarjetas ---------- */
+.tarjeta { background: var(--blanco); border: 1px solid var(--gris-300); border-radius: var(--radio); padding: 18px 20px; }
+.tarjeta h2 { font-size: 15px; color: var(--azul-900); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.tarjeta h2 .num { background: var(--azul-700); color: var(--blanco); border-radius: 50%; width: 22px; height: 22px; display: inline-grid; place-items: center; font-size: 12px; }
+
+/* ---------- Campos (ingresado vs. automático) ---------- */
+.campos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
+.campo label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gris-700); margin-bottom: 4px; }
+.campo .valor { border: 1px solid var(--gris-300); border-radius: 6px; padding: 7px 10px; min-height: 34px; background: var(--gris-100); font-size: 13.5px; }
+.campo.usuario .valor { background: var(--blanco); border-color: var(--azul-500); box-shadow: 0 0 0 2px var(--azul-100); }
+.campo.ancho { grid-column: 1 / -1; }
+.origen { font-size: 10.5px; padding: 1px 6px; border-radius: 10px; font-weight: 600; }
+.origen.u { background: var(--azul-100); color: var(--azul-700); }
+.origen.a { background: var(--gris-100); color: var(--gris-700); border: 1px solid var(--gris-300); }
+.leyenda { display: flex; gap: 14px; font-size: 12px; color: var(--gris-700); margin-top: 12px; }
+.mono { font-family: "Consolas", "DejaVu Sans Mono", monospace; font-size: 12.5px; }
+.valor.mono { word-break: break-all; }
+
+/* ---------- Estados ---------- */
+.estado { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 14px; font-weight: 700; font-size: 12.5px; letter-spacing: .3px; }
+.estado::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+.estado.verde { color: var(--verde); background: var(--verde-bg); }
+.estado.ambar { color: var(--ambar); background: var(--ambar-bg); }
+.estado.rojo { color: var(--rojo); background: var(--rojo-bg); }
+.estado.gris { color: var(--gris-700); background: var(--gris-100); border: 1px solid var(--gris-300); }
+
+/* ---------- Avisos ---------- */
+.aviso { border-left: 4px solid var(--azul-500); background: var(--azul-100); padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 12.5px; color: var(--gris-900); }
+.aviso.frontera { border-left-color: var(--violeta); background: var(--violeta-bg); }
+.aviso.alerta { border-left-color: var(--ambar); background: var(--ambar-bg); }
+
+/* ---------- Botones ---------- */
+.acciones { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+.btn { white-space: nowrap; border: 1px solid var(--gris-300); background: var(--blanco); color: var(--gris-900); padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.btn.primario { background: var(--azul-700); border-color: var(--azul-700); color: var(--blanco); }
+
+/* ---------- Tablas ---------- */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .5px; color: var(--gris-500); font-weight: 600; padding: 6px 8px; border-bottom: 1px solid var(--gris-300); }
+td { padding: 8px; border-bottom: 1px solid var(--gris-100); vertical-align: top; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr.total td { border-top: 2px solid var(--gris-900); font-weight: 700; }

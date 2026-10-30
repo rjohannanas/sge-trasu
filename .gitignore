@@ -1,0 +1,29 @@
+# Documentos binarios pesados (informes, material de clase): se guardan fuera del repositorio
+*.pdf
+*.docx
+*.pptx
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Java / Spring Boot
+target/
+build/
+.gradle/
+*.class
+
+# Node
+node_modules/
+
+# Entorno y credenciales
+.env
+.env.*
+application-local.properties
+
+# Editores y sistema
+.idea/
+.vscode/
+*.iml
+.DS_Store
